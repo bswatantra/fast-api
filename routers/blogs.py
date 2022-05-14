@@ -5,6 +5,7 @@ import schemas
 import models
 import database
 from repository import blog
+import oauth2
 
 
 router = APIRouter(
@@ -18,7 +19,7 @@ get_db = database.get_db
 
 
 @router.get("/")
-def all(db: Session = Depends(get_db)):
+def all(db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
     return blog.get_all(db)
 
 
